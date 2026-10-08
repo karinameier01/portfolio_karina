@@ -493,7 +493,6 @@ const fallbackRepos = [
   { name: 'SmartEvent', language: 'Vue', description: 'Interface e experiência de eventos.', url: 'https://github.com/karinameier01/SmartEvent' },
   { name: 'Bookiss', language: 'Ionic', description: 'Aplicativo mobile para consulta e organização de livros.', url: 'https://github.com/karinameier01/Bookiss' },
   { name: 'AlbumFig', language: 'Ionic', description: 'Projeto mobile com organização de coleção e perfil.', url: 'https://github.com/karinameier01/AlbumFig' },
-  { name: 'FigAlbum', language: 'Vue', description: 'Projeto de organização visual e de coleção.', url: 'https://github.com/karinameier01/FigAlbum' },
   { name: 'meuApp', language: 'Vue', description: 'Aplicação de estudo em lógica e interface.', url: 'https://github.com/karinameier01/meuApp' },
   { name: 'Joguinho Burro', language: 'JavaScript', description: 'Projeto de jogo e experiência interativa.', url: 'https://github.com/karinameier01/joguinho_burro' },
 ]
@@ -530,7 +529,7 @@ onMounted(async () => {
     if (!response.ok) throw new Error('GitHub API failed')
 
     const data = await response.json()
-    const known = ['SmartEvent', 'Bookiss', 'AlbumFig', 'FigAlbum', 'meuApp', 'Mini-App', 'joguinho_burro']
+    const known = ['SmartEvent', 'Bookiss', 'AlbumFig', 'meuApp', 'Mini-App', 'joguinho_burro']
     const mapped = data
       .filter((repo) => known.includes(repo.name))
       .slice(0, 6)
@@ -542,10 +541,10 @@ onMounted(async () => {
       }))
 
     if (mapped.length) {
-      githubRepos.value = [...mapped, ...extraRepos].slice(0, 12)
+      githubRepos.value = [...mapped, ...extraRepos].filter((repo) => repo.name !== 'FigAlbum').slice(0, 12)
     }
   } catch (error) {
-    githubRepos.value = [...fallbackRepos, ...extraRepos].slice(0, 12)
+    githubRepos.value = [...fallbackRepos, ...extraRepos].filter((repo) => repo.name !== 'FigAlbum').slice(0, 12)
   }
 
   const observer = new IntersectionObserver(
